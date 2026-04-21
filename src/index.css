@@ -1086,31 +1086,193 @@ p {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 3.5rem;
+  }
+
   .section {
     padding: var(--space-2xl) 0;
   }
 
+  /* ── TopBar / Nav ── */
   .topbar {
     display: none;
   }
 
   .nav {
     top: 0;
+    padding: 0.8rem 0;
   }
 
-  .stats-strip {
-    flex-direction: column;
+  .nav__cta {
+    display: none;
   }
 
-  .process__step {
-    grid-template-columns: 48px 1fr;
-    gap: var(--space-sm);
+  .nav__logo {
+    font-size: 1rem;
+  }
+
+  /* ── Scroll margin for sticky nav ── */
+  .form-section,
+  .why,
+  .process,
+  .testimonial,
+  .cta-section {
+    scroll-margin-top: 70px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: auto;
+    padding-top: 100px;
+    padding-bottom: var(--space-2xl);
+  }
+
+  .hero__eyebrow {
+    font-size: 0.6rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero__title {
+    font-size: 2.2rem;
+    line-height: 1.15;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero__subtitle {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__cta .btn--large {
+    width: 100%;
+    text-align: center;
   }
 
   .hero__scroll-indicator {
     display: none;
   }
 
+  /* ── Stats ── */
+  .stats-strip {
+    flex-direction: column;
+    gap: 1px;
+    margin-top: var(--space-lg);
+  }
+
+  .stats-strip__value {
+    font-size: 1.5rem;
+  }
+
+  .stats-strip__item {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  /* ── Why Section ── */
+  .why__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .why__intro {
+    font-size: 0.95rem;
+  }
+
+  .why__card {
+    padding: var(--space-lg);
+  }
+
+  .why__card-title {
+    font-size: 1.25rem;
+  }
+
+  .why__card-desc {
+    font-size: 0.9rem;
+  }
+
+  /* ── Process ── */
+  .process__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .process__intro {
+    font-size: 0.95rem;
+  }
+
+  .process__step {
+    grid-template-columns: 42px 1fr;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0;
+  }
+
+  .process__step-number {
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+  }
+
+  .process__step-text {
+    font-size: 0.92rem;
+    padding-top: 0.4rem;
+    line-height: 1.7;
+  }
+
+  /* ── Testimonial ── */
+  .testimonial {
+    padding: var(--space-2xl) 0;
+  }
+
+  .testimonial__quote {
+    font-size: 1.15rem;
+    line-height: 1.6;
+  }
+
+  .testimonial__quote::before {
+    font-size: 2.5rem;
+    top: -1rem;
+    left: -0.3rem;
+  }
+
+  /* ── CTA Section ── */
+  .cta-section__title {
+    font-size: 1.6rem;
+  }
+
+  .cta-section__subtitle {
+    font-size: 0.92rem;
+  }
+
+  /* ── Form / Wizard ── */
+  .form-section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .form-section__title {
+    font-size: 1.4rem;
+  }
+
+  .form-section__subtitle {
+    font-size: 0.88rem;
+  }
+
+  .wizard {
+    padding: var(--space-lg);
+  }
+
+  .wizard__input,
+  .wizard__select {
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .wizard__btn {
+    padding: 0.85rem 1rem;
+    font-size: 0.72rem;
+  }
+
+  /* ── Footer ── */
   .footer__inner {
     flex-direction: column;
     text-align: center;
@@ -1121,42 +1283,85 @@ p {
     justify-content: center;
   }
 
+  .footer__disclaimer {
+    font-size: 0.65rem;
+  }
+
+  /* ── WhatsApp ── */
   .whatsapp-btn {
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 54px;
-    height: 54px;
+    bottom: 1.2rem;
+    right: 1.2rem;
+    width: 50px;
+    height: 50px;
   }
 
   .whatsapp-btn svg {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
 
   .whatsapp-btn__tooltip {
     display: none;
   }
-
-  .nav__cta-text {
-    display: none;
-  }
-
-  .wizard {
-    padding: var(--space-lg);
-  }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 var(--space-sm);
+    padding: 0 var(--space-md);
+  }
+
+  .hero__title {
+    font-size: 1.8rem;
+  }
+
+  .hero__subtitle {
+    font-size: 0.9rem;
   }
 
   .btn--large {
-    padding: 1rem 2rem;
-    font-size: 0.78rem;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.72rem;
+  }
+
+  .stats-strip__value {
+    font-size: 1.3rem;
+  }
+
+  .why__card-title {
+    font-size: 1.15rem;
+  }
+
+  .process__step {
+    grid-template-columns: 36px 1fr;
+  }
+
+  .process__step-number {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .process__step-text {
+    font-size: 0.88rem;
+    padding-top: 0.3rem;
+  }
+
+  .cta-section__title {
+    font-size: 1.4rem;
   }
 
   .wizard {
     padding: var(--space-md);
+    min-height: 200px;
+  }
+
+  .wizard__input,
+  .wizard__select {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .form-section__title {
+    font-size: 1.3rem;
   }
 }
