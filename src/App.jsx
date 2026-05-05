@@ -117,7 +117,7 @@ function HeroSection({ onCtaClick }) {
           </h1>
           <p className="hero__subtitle">
             Seleccionamos operaciones de obra y llave en mano con rentabilidades reales documentadas,
-            referentes con plusvalías por encima del 16% y activos terminados con flujo de caja desde el primer mes.
+            referentes con plusvalías por encima del 18% y activos terminados con flujo de caja desde el primer mes.
           </p>
           <div className="hero__cta">
             <button className="btn btn--primary btn--large" onClick={onCtaClick} id="hero-cta">
@@ -126,7 +126,7 @@ function HeroSection({ onCtaClick }) {
           </div>
           <div className="stats-strip">
             <div className="stats-strip__item">
-              <div className="stats-strip__value">+16%</div>
+              <div className="stats-strip__value">+18%</div>
               <div className="stats-strip__label">Plusvalía última<br />operación de oficinas</div>
             </div>
             <div className="stats-strip__item">
@@ -169,7 +169,7 @@ function WhySection() {
             <h3 className="why__card-title">Edificios para reformar</h3>
             <p className="why__card-desc">
               Activos con potencial de transformación en zonas consolidadas.
-              Plusvalía neta superior al 16%, con reforma y venta o reposicionamiento.
+              Plusvalía neta superior al 18%, con reforma y venta o reposicionamiento.
             </p>
           </div>
           <div className="why__card" id="card-rentabilidad">
@@ -300,9 +300,10 @@ const WIZARD_STEPS = [
     key: 'phone',
     label: 'Teléfono',
     type: 'tel',
-    placeholder: '+34 600 000 000',
+    placeholder: '600 000 000',
     hint: '⚠️ Verificaremos este número de teléfono antes de darte acceso.',
     required: false,
+    hasPrefix: true,
   },
   {
     key: 'profile',
@@ -349,9 +350,34 @@ const WIZARD_STEPS = [
   },
 ]
 
+const PHONE_PREFIXES = [
+  { code: '+34', country: '🇪🇸 España', short: '🇪🇸 +34' },
+  { code: '+1', country: '🇺🇸 EE.UU.', short: '🇺🇸 +1' },
+  { code: '+44', country: '🇬🇧 Reino Unido', short: '🇬🇧 +44' },
+  { code: '+33', country: '🇫🇷 Francia', short: '🇫🇷 +33' },
+  { code: '+49', country: '🇩🇪 Alemania', short: '🇩🇪 +49' },
+  { code: '+39', country: '🇮🇹 Italia', short: '🇮🇹 +39' },
+  { code: '+351', country: '🇵🇹 Portugal', short: '🇵🇹 +351' },
+  { code: '+41', country: '🇨🇭 Suiza', short: '🇨🇭 +41' },
+  { code: '+31', country: '🇳🇱 Países Bajos', short: '🇳🇱 +31' },
+  { code: '+32', country: '🇧🇪 Bélgica', short: '🇧🇪 +32' },
+  { code: '+46', country: '🇸🇪 Suecia', short: '🇸🇪 +46' },
+  { code: '+47', country: '🇳🇴 Noruega', short: '🇳🇴 +47' },
+  { code: '+352', country: '🇱🇺 Luxemburgo', short: '🇱🇺 +352' },
+  { code: '+971', country: '🇦🇪 EAU', short: '🇦🇪 +971' },
+  { code: '+52', country: '🇲🇽 México', short: '🇲🇽 +52' },
+  { code: '+54', country: '🇦🇷 Argentina', short: '🇦🇷 +54' },
+  { code: '+55', country: '🇧🇷 Brasil', short: '🇧🇷 +55' },
+  { code: '+56', country: '🇨🇱 Chile', short: '🇨🇱 +56' },
+  { code: '+57', country: '🇨🇴 Colombia', short: '🇨🇴 +57' },
+  { code: '+507', country: '🇵🇦 Panamá', short: '🇵🇦 +507' },
+  { code: '+598', country: '🇺🇾 Uruguay', short: '🇺🇾 +598' },
+]
+
 function WizardForm() {
   const [step, setStep] = useState(0)
   const [status, setStatus] = useState('idle') // idle, submitting, success, error
+  const [phonePrefix, setPhonePrefix] = useState('+34')
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', profile: '', operationType: '', volume: ''
   })
@@ -394,6 +420,12 @@ function WizardForm() {
     if (!isCurrentValid()) return
     setStatus('submitting')
 
+    // Build final phone with prefix
+    const submitData = {
+      ...formData,
+      phone: formData.phone ? `${phonePrefix} ${formData.phone}` : '',
+    }
+
     // GTM dataLayer event
     if (window.dataLayer) {
       window.dataLayer.push({
@@ -408,7 +440,7 @@ function WizardForm() {
       const resp = await fetch('/api/kommo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       })
       if (resp.ok) {
         setStatus('success')
@@ -471,6 +503,30 @@ function WizardForm() {
                 </option>
               ))}
             </select>
+          ) : currentConfig.hasPrefix ? (
+            <div className="wizard__phone-group">
+              <select
+                className="wizard__prefix-select"
+                value={phonePrefix}
+                onChange={(e) => setPhonePrefix(e.target.value)}
+              >
+                {PHONE_PREFIXES.map((p) => (
+                  <option key={p.code} value={p.code}>
+                    {p.short}
+                  </option>
+                ))}
+              </select>
+              <input
+                className="wizard__input wizard__input--phone"
+                type={currentConfig.type}
+                placeholder={currentConfig.placeholder}
+                value={formData[currentConfig.key]}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                required={currentConfig.required}
+                autoFocus
+              />
+            </div>
           ) : (
             <input
               className="wizard__input"
